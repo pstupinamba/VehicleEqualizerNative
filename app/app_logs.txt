@@ -1,0 +1,8 @@
+--------- beginning of main
+09-15 00:18:59.651  5688  5688 D VehicleEqualizerNative: Velocidade lida: 9 km/h
+09-15 00:19:01.591  5688  5688 D VehicleEqualizerNative: Velocidade lida: 93 km/h
+09-15 00:46:14.868  6122  6122 D VehicleEqualizerNative: Velocidade lida: 125 km/h
+--------- beginning of main
+09-15 00:18:59.651  5688  5688 D VehicleEqualizerNative: Velocidade lida: 9 km/h
+09-15 00:19:01.591  5688  5688 D VehicleEqualizerNative: Velocidade lida: 93 km/h
+09-15 00:46:14.868  6122  6122 D VehicleEqualizerNative: Velocidade lida: 125 km/h
