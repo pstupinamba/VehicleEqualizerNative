@@ -4,13 +4,18 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.senai.vehicleequalizernative.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -118,6 +124,7 @@ class MainActivity : AppCompatActivity() {
 
         // Listener para o botão de leitura de velocidade
         readSpeedButton.setOnClickListener {
+            giveHapticFeedback() // <<< ADICIONADO
             val currentSpeed = vehicleSensorSimulator.readSensorData()
             speedLabel.text = "Velocidade Atual: $currentSpeed km/h"
             Log.d(TAG, "Velocidade lida: $currentSpeed km/h")
@@ -125,15 +132,26 @@ class MainActivity : AppCompatActivity() {
 
         // Listener para o botão de envio de volume CAN
         sendCanVolumeButton.setOnClickListener {
+            giveHapticFeedback()
             // Simula o envio de uma mensagem CAN de volume (ID 0x123, valor aleatório 0-100)
             val randomVolume = (0..100).random()
-            val message = CanMessage(id = 0x123, data =
-            byteArrayOf(randomVolume.toByte()))
+            val message = CanMessage(id = 0x123, data = byteArrayOf(randomVolume.toByte()))
             vehicleCanBusSimulator.sendMessage(message)
         }
 
         // Coleta mensagens CAN recebidas e atualiza a UI
-        activityScope.launch {
+        /*activityScope.launch {
+            vehicleCanBusSimulator.canMessageFlow.collect { message ->
+                if (message.id == 0x123 && message.data.isNotEmpty()) {
+                    val volume = message.data[0].toInt() and 0xFF
+                    canVolumeLabel.text = "Volume CAN: $volume"
+                    // Em um cenário real, você poderia usar este volume para ajustar o áudio
+                    // equalizerService?.setMasterVolume(volume) // Exemplo de chamada ao serviço
+                }
+            }
+        }*/
+
+        lifecycleScope.launch {
             vehicleCanBusSimulator.canMessageFlow.collect { message ->
                 if (message.id == 0x123 && message.data.isNotEmpty()) {
                     val volume = message.data[0].toInt() and 0xFF
@@ -144,7 +162,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun giveHapticFeedback() {
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(
+                    30, // duração em ms
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -163,6 +197,13 @@ class MainActivity : AppCompatActivity() {
         // Importante: parar o simulador CAN quando a atividade for destruída ou não for mais necessária
         vehicleCanBusSimulator.stopSimulator()
         activityScope.cancel() // Cancela as corrotinas do escopo da atividade
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // TODO: liberar buffers nativos (JNI) se forem alocados no futuro
+        vehicleCanBusSimulator.stopSimulator()
+        Log.i(TAG, "MainActivity destruída e recursos liberados.")
     }
 
     /**

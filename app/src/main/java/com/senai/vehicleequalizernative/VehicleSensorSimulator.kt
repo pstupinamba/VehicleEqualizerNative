@@ -1,6 +1,8 @@
 package com.senai.vehicleequalizernative
 
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.Random
 
 class VehicleSensorSimulator(private val sensorName: String) {
@@ -27,7 +29,7 @@ class VehicleSensorSimulator(private val sensorName: String) {
     /**
      * Simula uma operação de calibração para o sensor.
      */
-    fun calibrateSensor() {
+    suspend fun calibrateSensor() = withContext(Dispatchers.IO) {
         Log.i(TAG, "[$sensorName] Calibrando sensor...")
         // Simula um processo de calibração que levaria tempo
         Thread.sleep(1000) // Simula um atraso de 1 segundo

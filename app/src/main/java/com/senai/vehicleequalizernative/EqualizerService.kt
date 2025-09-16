@@ -45,7 +45,8 @@ class EqualizerService : Service() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(TAG, "Serviço de Equalizador destruído.")
+        // TODO: liberar buffers nativos (JNI) se forem alocados no futuro
+        Log.i(TAG, "MainActivity destruída e recursos liberados.")
     }
 }
 
