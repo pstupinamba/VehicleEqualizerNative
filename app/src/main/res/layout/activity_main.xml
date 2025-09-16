@@ -1,73 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="12dp"
     tools:targetApi="34"
-    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- Horizontal Guidelines -->
+    <!-- ===================== GUIDELINES ===================== -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
+        app:layout_constraintGuide_begin="12dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
+        app:layout_constraintGuide_end="12dp" />
 
-    <!-- Título -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineMiddle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <!-- ===================== CABEÇALHO (COMENTADO) ===================== -->
+    <!--
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/title_text"
+        android:text="VehicleEqualizerNative"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="8dp" />
+    -->
 
-    <!-- Switch com área de toque segura -->
+    <!-- ===================== SWITCH EQUALIZADOR ===================== -->
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/equalizerSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:minWidth="48dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:text="@string/equalizer_switch_text"
-        android:textSize="18sp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        android:text="Equalizador Ativado"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- ===================== LINHA DIVISÓRIA ===================== -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#CCC"
+        app:layout_constraintTop_toBottomOf="@id/equalizerSwitch"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="12dp" />
 
-    <!-- Graves -->
+    <!-- ===================== TÍTULO CONTROLES DE ÁUDIO ===================== -->
+    <TextView
+        android:id="@+id/audioControlsTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Controles de Áudio"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        android:layout_marginTop="12dp" />
+
+    <!-- ===================== GRAVES ===================== -->
     <TextView
         android:id="@+id/bassLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/bass_label"
-        android:textSize="16sp"
+        android:text="Graves"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/equalizerSwitch"
-        android:layout_marginTop="32dp" />
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintTop_toBottomOf="@id/audioControlsTitle"
+        android:layout_marginTop="12dp" />
 
     <SeekBar
         android:id="@+id/bassSeekBar"
@@ -75,22 +103,22 @@
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="50"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
-        app:layout_constraintTop_toBottomOf="@+id/bassLabel" />
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintTop_toBottomOf="@id/bassLabel"
+        android:layout_marginTop="6dp" />
 
-    <!-- Médios -->
+    <!-- ===================== MÉDIOS ===================== -->
     <TextView
         android:id="@+id/midLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/mid_label"
-        android:textSize="16sp"
+        android:text="Médios"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/bassSeekBar"
-        android:layout_marginTop="32dp" />
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintTop_toBottomOf="@id/bassSeekBar"
+        android:layout_marginTop="12dp" />
 
     <SeekBar
         android:id="@+id/midSeekBar"
@@ -98,44 +126,22 @@
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="50"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
-        app:layout_constraintTop_toBottomOf="@+id/midLabel" />
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintTop_toBottomOf="@id/midLabel"
+        android:layout_marginTop="6dp" />
 
-    <!-- Agudos -->
+    <!-- ===================== AGUDOS ===================== -->
     <TextView
         android:id="@+id/trebleLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/treble_label"
-        android:textSize="16sp"
+        android:text="Agudos"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/midSeekBar"
-        android:layout_marginTop="32dp" />
-
-    <TextView
-        android:id="@+id/speedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Velocidade Atual: -- km/h"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trebleSeekBar"
-        android:layout_marginTop="32dp" />
-
-    <Button
-        android:id="@+id/readSpeedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Atualizar Velocidade"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speedLabel"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintTop_toBottomOf="@id/midSeekBar"
+        android:layout_marginTop="12dp" />
 
     <SeekBar
         android:id="@+id/trebleSeekBar"
@@ -143,42 +149,88 @@
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="50"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
-        app:layout_constraintTop_toBottomOf="@+id/trebleLabel" />
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintTop_toBottomOf="@id/trebleLabel"
+        android:layout_marginTop="6dp" />
 
+    <!-- ===================== TÍTULO INFORMAÇÕES DO VEÍCULO ===================== -->
     <TextView
-        android:id="@+id/canVolumeLabel"
-        android:layout_width="wrap_content"
+        android:id="@+id/vehicleInfoTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Volume CAN: --"
+        android:text="Informações do Veículo"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/readSpeedButton"
-        android:layout_marginTop="32dp" />
-    <Button
-        android:id="@+id/sendCanVolumeButton"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
+        android:layout_marginTop="12dp" />
+
+    <!-- ===================== VELOCIDADE ===================== -->
+    <TextView
+        android:id="@+id/speedLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Enviar Volume CAN (Simulado)"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/canVolumeLabel"
+        android:text="Velocidade Atual: -- km/h"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
+        app:layout_constraintTop_toBottomOf="@id/vehicleInfoTitle"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/readSpeedButton"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="ATUALIZAR VELOCIDADE"
+        android:textAllCaps="true"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
+        app:layout_constraintTop_toBottomOf="@id/speedLabel"
+        android:layout_marginTop="6dp" />
+
+    <!-- ===================== VOLUME CAN ===================== -->
+    <TextView
+        android:id="@+id/canVolumeLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Volume CAN: --"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
+        app:layout_constraintTop_toBottomOf="@id/readSpeedButton"
         android:layout_marginTop="16dp" />
 
+    <Button
+        android:id="@+id/sendCanVolumeButton"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="ENVIAR VOLUME CAN"
+        android:textAllCaps="true"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/guidelineMiddle"
+        app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
+        app:layout_constraintTop_toBottomOf="@id/canVolumeLabel"
+        android:layout_marginTop="6dp" />
+
+    <!-- ===================== STATUS NATIVO ===================== -->
     <TextView
         android:id="@+id/nativeStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Status Nativo: Carregando..."
-        android:textSize="14sp"
+        android:text="Hello from C++ Native Audio Processor!"
+        android:textSize="12sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/trebleSeekBar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

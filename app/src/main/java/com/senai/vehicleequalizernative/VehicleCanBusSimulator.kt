@@ -8,7 +8,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 
 class VehicleCanBusSimulator {
     private val TAG = "VehicleCanBusSimulator"
-    private val messageChannel = Channel<CanMessage>()
+
+    //Capacidade limitada para evitar sobrecarga
+    private val messageChannel = Channel<CanMessage>(capacity = Channel.BUFFERED)
+
     private val scope = CoroutineScope(Dispatchers.Default)
 
     // Flow para notificar a UI sobre mensagens CAN recebidas
@@ -44,10 +47,15 @@ class VehicleCanBusSimulator {
      * Simula o envio de uma mensagem CAN para o barramento.
      * @param message A mensagem CAN a ser enviada.
      */
+    @OptIn(DelicateCoroutinesApi::class)
     fun sendMessage(message: CanMessage) {
         scope.launch {
+            if (!messageChannel.isClosedForSend) {
+                messageChannel.send(message)
+            }
+
             Log.i(TAG, "Enviando mensagem CAN (ID: 0x%X, Dados: %s)".format(message.id, message.data.joinToString { "%02X".format(it) }))
-            messageChannel.send(message)
+            //messageChannel.send(message)
         }
     }
 
